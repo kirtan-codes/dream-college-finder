@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dream College Finder</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #e6f0ff;
+      color: #000;
+    }
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .branding {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-weight: bold;
+      color: #facc15;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      margin: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .college {
+      background: #f1f5f9;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .college img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+    }
+  </style>
+<style>
+    .fade-in {
+      animation: fadeIn 1.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .music-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #1e3a8a;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="fade-in">
+  <audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-ukulele.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <button class="music-toggle" onclick="toggleMusic()">🎵</button>
+  <div class="branding">🧠 Invented by Kirtan</div>
+  <header>
+    <h1>🎯 Dream College Finder</h1>
+    <p>📚 Find the best colleges based on your dream career 🏆</p>
+  </header>
+  <div class="container">
+    <div class="card" id="welcomeCard">
+      <h2>👋 Welcome to 🎓 Dream College Finder!</h2>
+      <p style="font-size: 1.1rem; margin-bottom: 15px;">🚀 Let's discover the best college for your future!</p>
+      <label for="username">🧑‍🎓 Enter Your Name</label>
+      <input type="text" id="username" placeholder="e.g., Kirtan">
+      <button onclick="proceedToCareer()">🎬 Start Your Journey</button>
+    </div>
+    <div class="card" id="careerSelect" style="display:none">
+      <h2>Select Your Career Interest</h2>
+      <label for="career">Career</label>
+      <select id="career" onchange="showAdaptive()">
+          <option value="">Select</option>
+          <option value="engineering">Engineering</option>
+          <option value="medicine">Medicine</option>
+          <option value="business">Business</option>
+          <option value="law">Law</option>
+          <option value="design">Design</option>
+          <option value="arts">Arts</option>
+          <option value="science">Science</option>
+          <option value="commerce">Commerce</option>
+          <option value="sports">Sports</option>
+          <option value="civilservices">Civil Services</option>
+          <option value="media">Media & Journalism</option>
+        </select>
+    </div>
+
+    <div class="card" id="engineeringQs" style="display: none">
+      <h2>Engineering Preferences</h2>
+      <label>Preferred Branch</label>
+      <select><option>CS</option><option>Mechanical</option><option>Civil</option><option>Electrical</option><option>Chemical</option></select>
+      <label>Learning Style</label>
+      <select><option>Theory</option><option>Practical</option><option>Both</option></select>
+      <label>Preferred Country</label>
+      <select><option>India</option><option>USA</option><option>UK</option><option>Any</option></select>
+      <label>Preferred College Type</label>
+      <select><option>Government</option><option>Private</option><option>No Preference</option></select>
+      <label>Preferred Campus Life</label>
+      <select><option>Tech Festivals</option><option>Research-Oriented</option><option>Startup Support</option><option>No Preference</option></select>
+      <label>Financial Aid Requirement</label>
+      <select><option>Yes</option><option>No</option><option>Not Sure</option></select>
+      <button onclick="showResults('engineering')">Find Colleges</button>
+    </div>
+
+    <div class="card" id="medicineQs" style="display: none">
+      <h2>Medicine Preferences</h2>
+      <label>Preferred Role</label>
+      <select><option>Doctor</option><option>Surgeon</option><option>Medical Researcher</option></select>
+      <label>College Type</label>
+      <select><option>Government</option><option>Private</option><option>Both</option></select>
+      <label>Study Country</label>
+      <select><option>India</option><option>USA</option><option>UK</option><option>Any</option></select>
+      <label>Focus Area</label>
+      <select><option>Clinical Practice</option><option>Research</option><option>Public Health</option></select>
+      <label>MBBS or Postgraduate</label>
+      <select><option>MBBS</option><option>MD/MS</option><option>Both</option></select>
+      <label>Entrance Exam Preference</label>
+      <select><option>NEET</option><option>MCAT</option><option>Any</option></select>
+      <button onclick="showResults('medicine')">Find Colleges</button>
+    </div>
+
+    <div class="card" id="businessQs" style="display: none">
+      <h2>Business Preferences</h2>
+      <label>Focus Area</label>
+      <select><option>Entrepreneurship</option><option>Marketing</option><option>Finance</option><option>Operations</option><option>Strategy</option></select>
+      <label>Preferred Country</label>
+      <select><option>India</option><option>USA</option><option>Europe</option><option>Any</option></select>
+      <label>Preferred College Type</label>
+      <select><option>Government</option><option>Private</option><option>Any</option></select>
+      <label>Desired Industry</label>
+      <select><option>Startup</option><option>Corporate</option><option>Consulting</option></select>
+      <label>Program Level</label>
+      <select><option>BBA</option><option>MBA</option><option>Both</option></select>
+      <button onclick="showResults('business')">Find Colleges</button>
+    </div>
+
+    <div class="card" id="lawQs" style="display: none">
+      <h2>Law Preferences</h2>
+      <label>Interest</label>
+      <select><option>Corporate Law</option><option>International Law</option><option>Criminal Law</option><option>Civil Law</option></select>
+      <label>Location</label>
+      <select><option>India</option><option>UK</option><option>USA</option><option>Any</option></select>
+      <label>Degree Level</label>
+      <select><option>BA LLB</option><option>LLM</option><option>PhD</option></select>
+      <label>Focus Area</label>
+      <select><option>Litigation</option><option>Policy Making</option><option>Legal Advisory</option></select>
+      <label>Entrance Exam</label>
+      <select><option>CLAT</option><option>LSAT</option><option>Other</option></select>
+      <button onclick="showResults('law')">Find Colleges</button>
+    </div>
+
+    <div class="card" id="designQs" style="display: none">
+      <h2>Design Preferences</h2>
+      <label>Field</label>
+      <select><option>Graphic</option><option>Fashion</option><option>Industrial</option><option>UX/UI</option><option>Interior</option></select>
+      <label>Preferred Country</label>
+      <select><option>India</option><option>USA</option><option>UK</option><option>Any</option></select>
+      <label>Portfolio Ready?</label>
+      <select><option>Yes</option><option>No</option></select>
+      <label>Preferred Style</label>
+      <select><option>Modern</option><option>Classical</option><option>Experimental</option></select>
+      <label>Tools Known</label>
+      <select><option>Photoshop</option><option>Figma</option><option>AutoCAD</option><option>None</option></select>
+      <button onclick="showResults('design')">Find Colleges</button>
+    </div>
+
+    <div class="card" id="resultsCard" style="display: none">
+      <h2>🎓 Recommended Colleges</h2>
+      <div id="results"></div>
+    </div>
+  </div>
+
+  <script>
+    function proceedToCareer() {
+      const name = document.getElementById("username").value;
+      if (!name.trim()) {
+        alert("Please enter your name");
+        return;
+      }
+      document.getElementById("welcomeCard").style.display = "none";
+      document.getElementById("careerSelect").style.display = "block";
+    }
+
+    function showAdaptive() {
+      const val = document.getElementById("career").value;
+      document.querySelectorAll(".card[id$='Qs']").forEach(c => c.style.display = "none");
+      if (val) document.getElementById(val + "Qs").style.display = "block";
+    }
+
+    function showResults(career) {
+      document.querySelectorAll(".card").forEach(c => c.style.display = "none");
+      const results = document.getElementById("results");
+      results.innerHTML = "";
+      const collegeData = {
+        arts: [
+          { name: "Kala Bhavan - Visva Bharati", reason: "Top for fine and visual arts in India", link: "https://visvabharati.ac.in", logo: "https://logo.clearbit.com/visvabharati.ac.in" },
+          { name: "Royal College of Art", reason: "Prestigious UK art school", link: "https://rca.ac.uk", logo: "https://logo.clearbit.com/rca.ac.uk" },
+          { name: "Pratt Institute", reason: "Top US institute for creative arts", link: "https://pratt.edu", logo: "https://logo.clearbit.com/pratt.edu" }
+        ],
+        science: [
+          { name: "IISc Bangalore", reason: "India's premier science institute", link: "https://iisc.ac.in", logo: "https://logo.clearbit.com/iisc.ac.in" },
+          { name: "Caltech", reason: "World leader in science & tech", link: "https://caltech.edu", logo: "https://logo.clearbit.com/caltech.edu" },
+          { name: "Oxford University", reason: "Renowned for physical sciences", link: "https://ox.ac.uk", logo: "https://logo.clearbit.com/ox.ac.uk" }
+        ],
+        commerce: [
+          { name: "SRCC, Delhi University", reason: "India's top commerce college", link: "https://srcc.edu", logo: "https://logo.clearbit.com/srcc.edu" },
+          { name: "LSE", reason: "Top global institution for economics", link: "https://lse.ac.uk", logo: "https://logo.clearbit.com/lse.ac.uk" },
+          { name: "Wharton", reason: "Elite US business & commerce school", link: "https://wharton.upenn.edu", logo: "https://logo.clearbit.com/upenn.edu" }
+        ],
+        sports: [
+          { name: "NSNIS Patiala", reason: "India's leading sports training institute", link: "https://nsnis.org", logo: "https://logo.clearbit.com/nsnis.org" },
+          { name: "Loughborough University", reason: "World-renowned for sports science", link: "https://lboro.ac.uk", logo: "https://logo.clearbit.com/lboro.ac.uk" },
+          { name: "University of Florida", reason: "Strong sports programs in USA", link: "https://ufl.edu", logo: "https://logo.clearbit.com/ufl.edu" }
+        ],
+        civilservices: [
+          { name: "Vision IAS", reason: "Top UPSC coaching in India", link: "https://visionias.in", logo: "https://logo.clearbit.com/visionias.in" },
+          { name: "Chanakya IAS Academy", reason: "Renowned for civil services prep", link: "https://chanakyaiasacademy.com", logo: "https://logo.clearbit.com/chanakyaiasacademy.com" },
+          { name: "ALS IAS", reason: "Top institute for UPSC exams", link: "https://alsias.net", logo: "https://logo.clearbit.com/alsias.net" }
+        ],
+        media: [
+          { name: "IIMC Delhi", reason: "Top journalism school in India", link: "https://iimc.gov.in", logo: "https://logo.clearbit.com/iimc.gov.in" },
+          { name: "NYU Tisch", reason: "Leading film/media school in USA", link: "https://tisch.nyu.edu", logo: "https://logo.clearbit.com/nyu.edu" },
+          { name: "FTII Pune", reason: "Top Indian film/media institute", link: "https://ftii.ac.in", logo: "https://logo.clearbit.com/ftii.ac.in" }
+        ],
+        engineering: [
+          { name: "MIT", reason: "Top in engineering innovation", link: "https://web.mit.edu", logo: "https://logo.clearbit.com/web.mit.edu" },
+          { name: "Stanford University", reason: "Silicon Valley leader in CS & AI", link: "https://cs.stanford.edu", logo: "https://logo.clearbit.com/stanford.edu" },
+          { name: "IIT Bombay", reason: "Best in India for CS and Mechanical", link: "https://iitb.ac.in", logo: "https://logo.clearbit.com/iitb.ac.in" }
+        ],
+        medicine: [
+          { name: "AIIMS Delhi", reason: "Top government medical college in India", link: "https://aiims.edu", logo: "https://logo.clearbit.com/aiims.edu" },
+          { name: "Harvard Medical School", reason: "World-renowned for medicine", link: "https://hms.harvard.edu", logo: "https://logo.clearbit.com/harvard.edu" },
+          { name: "Johns Hopkins", reason: "Leader in medical research", link: "https://jhu.edu", logo: "https://logo.clearbit.com/jhu.edu" }
+        ],
+        business: [
+          { name: "Harvard Business School", reason: "Top for global leadership & finance", link: "https://hbs.edu", logo: "https://logo.clearbit.com/hbs.edu" },
+          { name: "ISB Hyderabad", reason: "Top Indian B-school for entrepreneurship", link: "https://isb.edu", logo: "https://logo.clearbit.com/isb.edu" },
+          { name: "Wharton", reason: "Ivy League MBA excellence", link: "https://wharton.upenn.edu", logo: "https://logo.clearbit.com/upenn.edu" }
+        ],
+        law: [
+          { name: "Harvard Law School", reason: "Top for international & corporate law", link: "https://hls.harvard.edu", logo: "https://logo.clearbit.com/harvard.edu" },
+          { name: "NLU Delhi", reason: "India's leading national law school", link: "https://nludelhi.ac.in", logo: "https://logo.clearbit.com/nludelhi.ac.in" },
+          { name: "Yale Law", reason: "Globally prestigious law school", link: "https://law.yale.edu", logo: "https://logo.clearbit.com/yale.edu" }
+        ],
+        design: [
+          { name: "NID Ahmedabad", reason: "India's top design institute", link: "https://nid.edu", logo: "https://logo.clearbit.com/nid.edu" },
+          { name: "RISD", reason: "Top design school in the US", link: "https://risd.edu", logo: "https://logo.clearbit.com/risd.edu" },
+          { name: "Parsons", reason: "Famous for fashion and graphics", link: "https://www.newschool.edu/parsons/", logo: "https://logo.clearbit.com/newschool.edu" }
+        ]
+      };
+      collegeData[career].forEach(clg => {
+        results.innerHTML += `
+          <div class="college">
+            <img src="${clg.logo}" alt="${clg.name} logo">
+            <div>
+              <strong>${clg.name}</strong><br>
+              ${clg.reason}<br>
+              <a href="${clg.link}" target="_blank">Visit Website</a>
+            </div>
+          </div>
+        `;
+      });
+      document.getElementById("resultsCard").style.display = "block";
+    }
+  function toggleMusic() {
+      const music = document.getElementById('bgMusic');
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+  </script>
+</body>
+</html>
